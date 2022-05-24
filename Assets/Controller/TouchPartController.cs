@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class TouchPartController : MonoBehaviour
 {
-    public void Init(ActionItemData data)
-    {
-
-    }
-
-
     // Start is called before the first frame update
     void Start()
     {
