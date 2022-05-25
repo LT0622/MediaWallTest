@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using SerialPortUtility;
 using System.IO;
@@ -28,9 +28,16 @@ public class read : MonoBehaviour
         load();
     }
     void Start()
-    {       
-        port.SerialNumber = Rfid.port; //读取json文件里的端口号          
-        port.Open();      
+    {
+        try
+        {
+        port.SerialNumber = Rfid.port; //读取json文件里的端口号
+        port.Open();
+        }
+        catch (System.ArgumentNullException)
+        {
+
+        }
         Buttons[0].onClick.AddListener(OnClick_0);
         Buttons[1].onClick.AddListener(OnClick_1);
         Buttons[2].onClick.AddListener(OnClick_2);
