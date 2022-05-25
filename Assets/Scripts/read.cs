@@ -5,14 +5,15 @@ using System.IO;
 using LitJson;
 using DG.Tweening;
 using UnityEngine.Video;
+using System;
 
-[System.Serializable]
+/*[System.Serializable]
 public class RFID
 {
     public string port;
     public string[] rfid = new string[5];
     public string[] path = new string[5]; 
-}
+}*/
 public class read : MonoBehaviour
 {
     public SerialPortUtilityPro port;
@@ -58,6 +59,7 @@ public class read : MonoBehaviour
             return;
         }
         info = info[0].ToString();//得到RFID
+        Debug.Log(info);
         for(int i = 0; i < Rfid.rfid.Length;i++)
         {
             if (info == Rfid.rfid[i])
@@ -68,10 +70,32 @@ public class read : MonoBehaviour
         }
        
     }
+    public void SendMsg()
+    {
+        string msg = "0401DC1E";
+        byte[] cmd = new byte[1024 * 1024 * 3];
+        cmd = Convert16(msg);
+        port.Write(cmd);
+        //port.Write(cmd, 0, cmd.Length);
+    }
+    private byte[] Convert16(string strText)
+    {
+        strText = strText.Replace(" ", "");
+        byte[] bText = new byte[strText.Length / 2];
+        for (int i = 0; i < strText.Length / 2; i++)
+        {
+            bText[i] = Convert.ToByte(Convert.ToInt32(strText.Substring(i * 2, 2), 16));
+        }
+        return bText;
+    }
     // Update is called once per frame
     void Update()
     {
-       
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SendMsg();
+            Debug.Log("send");
+        }
     }
     void load()//读取
     {
