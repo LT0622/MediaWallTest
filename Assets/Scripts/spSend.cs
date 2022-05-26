@@ -12,7 +12,7 @@ using System.Collections;
 [System.Serializable]
 public class RFID
 {
-    public string Port;
+    public string port;
     public string[] rfid = new string[5];
     public string[] path = new string[5];
 }
@@ -22,7 +22,7 @@ public class spSend : MonoBehaviour
     public RFID RFID = new RFID();
     Thread dataReceiveThread;
     private string _JsonPath;
-    public byte[] SendData = new byte[4] { 0x04, 0x01, 0xDC, 0x1E };
+    private byte[] _SendData = new byte[4] { 0x04, 0x01, 0xDC, 0x1E };
     private int _length = 0;
     private string RfidRead = "";
     public string RfidNow = "";//读取到的RFID
@@ -37,8 +37,7 @@ public class spSend : MonoBehaviour
     }
     void Start()
     {
-
-        Port = new SerialPort(RFID.Port, 19200, Parity.None, 8, StopBits.One);
+        Port = new SerialPort(RFID.port, 19200, Parity.None, 8, StopBits.One);
         Port.Open();
         if (Port.IsOpen)
         {
@@ -118,7 +117,7 @@ public class spSend : MonoBehaviour
         {
             if (Port != null && Port.IsOpen)
             {
-                Port.Write(SendData, 0, SendData.Length);
+                Port.Write(_SendData, 0, _SendData.Length);
                 Thread.Sleep(100);
                 try
                 {
