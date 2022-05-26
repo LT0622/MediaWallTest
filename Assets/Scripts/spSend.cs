@@ -37,9 +37,13 @@ public class spSend : MonoBehaviour
     }
     void Start()
     {
+        try
+        {
+            Port = new SerialPort(RFID.Port, 19200, Parity.None, 8, StopBits.One);
+            Port.Open();
+        }
+        catch(System.Exception) { }
 
-        Port = new SerialPort(RFID.Port, 19200, Parity.None, 8, StopBits.One);
-        Port.Open();
         if (Port.IsOpen)
         {
             Debug.Log("串口打开成功");
@@ -122,7 +126,7 @@ public class spSend : MonoBehaviour
                 Thread.Sleep(100);
                 try
                 {
-                    _length += Port.Read(buffer, _length, buffer.Length - _length);//接收字节                                 
+                    _length += Port.Read(buffer, _length, buffer.Length - _length);//接收字节
                     if (_length == buffer[0] && _length != 5)
                     {
                         check_rfid(buffer);
