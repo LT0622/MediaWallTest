@@ -259,9 +259,7 @@ public class spSend : MonoBehaviour
         anim(4);
     }
     private void anim(int i)
-    {
-        //  Anim.GetComponent<RawImage>().color = new Color(1, 1, 1, 0);
-        //    videoPlayer.Stop();       
+    {             
         Anim[i].GetComponent<RawImage>().DOFade(1, 0.5f);
         DOTween.To(v => { }, 0, 0, 0.5f).onComplete += () => { videoPlayer[i].Play(); };
     }
