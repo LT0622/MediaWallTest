@@ -1,5 +1,5 @@
 {
-"port":"COM6",
-"rfid":["11111111111111","22222222222222","333333333333333","44444444444","5555555555555"],
-"path":["aaaaaaaaaaa","bbbbbbbbbbb","ccccccccccc","dddddddddddd","eeeeeeeeeee"]
+"port":"COM8",
+"rfid":["34BF30845014E0","1DA130845014E0","DABA30845014E0","3BDE79D35014E0","499BBAD85014E0"],
+"path":["Cris Velasco,Hinterland Studio - Can You Help Us.wav","Cris Velasco,Hinterland Studio - Molly's Kitchen.wav","Cris Velasco,Hinterland Studio - Soliloquy & End.wav","Cris Velasco,Hinterland Studio - Terminal.wav","Cris Velasco,Hinterland Studio - Winter Searching.wav"]
 }
