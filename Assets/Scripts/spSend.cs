@@ -39,10 +39,10 @@ public class spSend : MonoBehaviour
     {
         try
         {
-            Port = new SerialPort(RFID.Port, 19200, Parity.None, 8, StopBits.One);
+            Port = new SerialPort(RFID.port, 19200, Parity.None, 8, StopBits.One);
             Port.Open();
         }
-        catch(System.Exception) { }
+        catch (System.Exception) { }
 
         if (Port.IsOpen)
         {
