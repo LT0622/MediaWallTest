@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System;
-using System.IO.Ports;
+//using System.IO.Ports;
 using UnityEngine.UI;
 using System.Threading;
 using System.IO;
@@ -8,6 +8,7 @@ using LitJson;
 using UnityEngine.Video;
 using DG.Tweening;
 using System.Collections;
+using SerialPortUtility;
 
 [System.Serializable]
 public class RFID
@@ -18,7 +19,7 @@ public class RFID
 }
 public class spSend : MonoBehaviour
 {
-    public SerialPort Port;
+    public SerialPortUtilityPro Port;
     public RFID RFID = new RFID();
     Thread dataReceiveThread;
     private string _JsonPath;
@@ -30,6 +31,8 @@ public class spSend : MonoBehaviour
     public GameObject[] Anims = new GameObject[5];
     public VideoPlayer[] VideoPlayers = new VideoPlayer[5];
     public AudioSource Audio;//音频播放
+    public byte[] buffer = new byte[1024];
+
     void Awake()
     {
         _JsonPath = Application.dataPath + "/StreamingAssets/configData.text";
@@ -39,12 +42,13 @@ public class spSend : MonoBehaviour
     {
         try
         {
-            Port = new SerialPort(RFID.port, 19200, Parity.None, 8, StopBits.One);
+            Port.SerialNumber = RFID.port;
+            // Port = new SerialPort(RFID.port, 19200, Parity.None, 8, StopBits.One);
             Port.Open();
         }
         catch (System.Exception) { }
 
-        if (Port.IsOpen)
+        if (Port.IsOpened())
         {
             Debug.Log("串口打开成功");
         }
@@ -116,17 +120,20 @@ public class spSend : MonoBehaviour
     }
     void DataReceiveFunction()//接收数据
     {
-        byte[] buffer = new byte[1024];
+
+        //byte[] buffer = new byte[1024];
 
         while (true)
         {
-            if (Port != null && Port.IsOpen)
+            if (Port != null && Port.IsOpened())
             {
-                Port.Write(_SendData, 0, _SendData.Length);
+                Port.Write(_SendData);
+                //Port.Write(_SendData, 0, _SendData.Length);
                 Thread.Sleep(100);
                 try
                 {
-                    _length += Port.Read(buffer, _length, buffer.Length - _length);//接收字节
+                    //_length += Port.GetLRC(buffer, _length, buffer.Length - _length);//接收字节
+                    //  _length += Port.Read(buffer, _length, buffer.Length - _length);//接收字节
                     if (_length == buffer[0] && _length != 5)
                     {
                         check_rfid(buffer);
@@ -146,6 +153,7 @@ public class spSend : MonoBehaviour
             }
             Thread.Sleep(100);
         }
+
     }
     void check_rfid(byte[] buffer)//检查数据
     {
@@ -230,5 +238,10 @@ public class spSend : MonoBehaviour
         AudioClip clip = www.GetAudioClip();
         Audio.clip = clip;
         Audio.Play();
+    }
+    public void ReadProtInfo(object info)
+    {
+        buffer = (byte[])info;
+
     }
 }
