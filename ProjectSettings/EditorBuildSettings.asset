@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: ed6f5264f6ad942409e5bc737f724b6d
-  - enabled: 1
-    path: Assets/Scenes/Test_WebGL.unity
-    guid: a864daba332b12d4cb44dea4e8a4ba74
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}
