@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using RenderHeads.Media.AVProVideo;
+
 public class zi : MonoBehaviour
 {
     public TextAsset text;
@@ -10,8 +13,10 @@ public class zi : MonoBehaviour
     private string[] str;
     private int txt_no;
     private int txt_size;
-    private int[] vector = new int[6] { 400, 500, 600, 700, 900, 1000 };
+    private int[] vector = new int[6] { 200, 500, 600, 700, 900, 1000 };
     private int i;
+    public MediaPlayer mediaPlayer;
+    public DisplayUGUI DisplayUGUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,12 +27,29 @@ public class zi : MonoBehaviour
         InvokeRepeating("Inst", 1, 4);
         InvokeRepeating("Inst", 2, 6);
         InvokeRepeating("Inst", 2, 4);
+        DisplayUGUI.color = new Color(1, 1, 1, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            mediaPlayer.Control.Play();
+            panel.GetComponent<CanvasGroup>().DOFade(0, 1).SetEase(Ease.Linear).onComplete += () =>
+            {
+                DisplayUGUI.DOFade(1, 1).SetEase(Ease.Linear);
+            };
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            DisplayUGUI.DOFade(0, 1).SetEase(Ease.Linear).onComplete += () =>
+            {
+                mediaPlayer.Control.Seek(0);
+                mediaPlayer.Control.Stop();
+                panel.GetComponent<CanvasGroup>().DOFade(1, 2).SetEase(Ease.Linear);
+            };
+        }
     }
     void Inst()
     {
@@ -46,7 +68,7 @@ public class zi : MonoBehaviour
         text.GetComponent<Text>().text = str[txt_no];
         if (txt_size == 0)
         {
-            text.GetComponent<Text>().fontSize = 60;
+            text.GetComponent<Text>().fontSize = 50;
         }
         else
         {
