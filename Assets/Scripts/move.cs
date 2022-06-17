@@ -12,11 +12,11 @@ public class move : MonoBehaviour
     {
         if (transform.GetComponent<Text>().fontSize == 80)
         {
-            time = 6;
+            time = 8;
         }
         else
         {
-            time = 5;
+            time = 6;
         }
         transform.DOLocalMoveX(-1400, time).SetEase(Ease.Linear).OnComplete(Destroy);
     }

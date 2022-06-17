@@ -28,6 +28,8 @@ public class zi : MonoBehaviour
         InvokeRepeating("Inst", 2, 6);
         InvokeRepeating("Inst", 2, 4);
         DisplayUGUI.color = new Color(1, 1, 1, 0);
+        mediaPlayer.Control.Stop();
+
     }
 
     // Update is called once per frame
@@ -55,7 +57,7 @@ public class zi : MonoBehaviour
     {
         Rand();
         GameObject text = Instantiate(textPrefab, new Vector3(2200, vector[i], 0), Quaternion.identity);
-        if (i < 5)
+        if (i < vector.Length - 1)
         {
             i++;
         }
@@ -63,7 +65,6 @@ public class zi : MonoBehaviour
         {
             i = 0;
         }
-
         text.transform.parent = panel.transform;//把实例化的物体放到父物体之下
         text.GetComponent<Text>().text = str[txt_no];
         if (txt_size == 0)
